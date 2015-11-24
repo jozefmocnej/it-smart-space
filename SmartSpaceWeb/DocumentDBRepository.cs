@@ -141,5 +141,33 @@ namespace SmartSpaceWeb
             return await Client.CreateDocumentAsync(Collection.SelfLink, item);
         }
 
+        public static T GetItem(Expression<Func<T, bool>> predicate)
+        {
+            return Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
+                        .Where(predicate)
+                        .AsEnumerable()
+                        .FirstOrDefault();
+        }
+
+        public static async Task<Document> UpdateItemAsync(string id, T item)
+        {
+            Document doc = GetDocument(id);
+            return await Client.ReplaceDocumentAsync(doc.SelfLink, item);
+        }
+
+        private static Document GetDocument(string id)
+        {
+            return Client.CreateDocumentQuery(Collection.DocumentsLink)
+                .Where(d => d.Id == id)
+                .AsEnumerable()
+                .FirstOrDefault();
+        }
+
+        public static async Task DeleteItemAsync(string id)
+        {
+            Document doc = GetDocument(id);
+            await client.DeleteDocumentAsync(doc.SelfLink);
+        }
+
     }
 }
