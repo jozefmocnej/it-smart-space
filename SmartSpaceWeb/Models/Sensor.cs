@@ -30,7 +30,6 @@ namespace SmartSpaceWeb.Models
         [JsonProperty(PropertyName = "contatore")]
         public string Contatore { get; set; }
 
-
     }
 
 }
