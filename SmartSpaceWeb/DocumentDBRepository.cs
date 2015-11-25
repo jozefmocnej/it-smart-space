@@ -181,7 +181,7 @@ namespace SmartSpaceWeb
             
         //    var trigger = await Client.CreateTriggerAsync(Collection.SelfLink, trig);
         //    var test = trigger.Resource.ResourceId;
-        }
-
     }
+
+    
 }

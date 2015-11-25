@@ -21,12 +21,19 @@ namespace SmartSpaceWeb.Controllers
 
         public ActionResult KitchenIndex()
         {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.Place == "kitchen"));
-            /*DateTime newest = new DateTime();
-            foreach (Sensor s in items)
-            {
-                items.
-            }*/
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
+            return View(items);
+        }
+
+        public ActionResult BathroomIndex()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "BATHROOM"));
+            return View(items);
+        }
+
+        public ActionResult KingBedroomIndex()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "DOUBLE_BEDROOM"));
             return View(items);
         }
 

@@ -184,6 +184,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\flame.gif" />
+    <Content Include="Images\humid.jpg" />
+    <Content Include="Images\Lightbulb.jpg" />
+    <Content Include="Images\pir.jpg" />
+    <Content Include="Images\question.png" />
+    <Content Include="Images\temperature.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\SmartSpaceWeb.pubxml" />
@@ -241,6 +247,8 @@
     <Content Include="Views\Sensor\Delete.cshtml" />
     <Content Include="Views\Sensor\Details.cshtml" />
     <Content Include="Views\Sensor\KitchenIndex.cshtml" />
+    <Content Include="Views\Sensor\BathroomIndex.cshtml" />
+    <Content Include="Views\Sensor\KingBedroomIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
