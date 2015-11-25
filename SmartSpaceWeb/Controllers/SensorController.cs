@@ -15,7 +15,18 @@ namespace SmartSpaceWeb.Controllers
         // GET: Sensor
         public ActionResult Index()
         {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.Id != null));
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            return View(items);
+        }
+
+        public ActionResult KitchenIndex()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.Place == "kitchen"));
+            /*DateTime newest = new DateTime();
+            foreach (Sensor s in items)
+            {
+                items.
+            }*/
             return View(items);
         }
 

@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<SmartSpaceWeb.Models.Sensor>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "KitchenIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
+<meta http-equiv="refresh" content="5" />
+<h2>KitchenIndex</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -19,9 +19,6 @@
             @Html.DisplayNameFor(model => model.AtLocation)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Place)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Timestamp)
         </th>
         <th>
@@ -32,17 +29,33 @@
         </th>
         <th></th>
     </tr>
-    <!--Ahoj0-->
-@foreach (var item in Model) { 
+
+    @{
+        List<DateTime> time = new List<DateTime>();
+        List<String> type = new List<string>();
+        }
+@foreach (var item in Model) {
+    if (type.Contains(item.Type))
+    {
+        if (time[type.IndexOf(item.Type)] < Convert.ToDateTime(item.Timestamp))
+        { time[type.IndexOf(item.Type)] = Convert.ToDateTime(item.Timestamp); }
+    }
+    else
+    {
+        type.Add(item.Type);
+        time.Add(Convert.ToDateTime(item.Timestamp));
+    }
+}
+@foreach (var item in Model)
+{
+    if (time[type.IndexOf(item.Type)] == Convert.ToDateTime(item.Timestamp))
+    { 
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AtLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Timestamp)
@@ -60,6 +73,6 @@
         </td>
     </tr>
 }
+}
 
 </table>
-@Html.ActionLink("Index2", "KitchenIndex")
