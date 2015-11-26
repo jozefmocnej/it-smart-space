@@ -51,6 +51,8 @@ namespace SmartSpaceWeb.Controllers
         }
 
         public PartialViewResult _SensorPartial(string room) {
+            if (room == null)
+            { room = ""; }
             var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
             var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
             int val;
