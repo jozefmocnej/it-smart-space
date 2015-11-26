@@ -15,23 +15,17 @@
     <div class="col-md-4">
 @{switch (room2)
   {
-      case "temperature":
+      case "KITCHEN":
         <img src="~/Images/temperature.png" alt="temperature" style="width:50px;height:50px;" />
           break;
-      case "pir":
+      case "BATHROOM":
     <img src="~/Images/pir.jpg" alt="pir" style="width:50px;height:50px;" />
           break;
-      case "humidity":
+      case "DOUBLEBEDROOM":
     <img src="~/Images/humid.jpg" alt="humidity" style="width:50px;height:50px;" />
           break;
-      case "light":
-    <img src="~/Images/Lightbulb.jpg" alt="light" style="width:50px;height:50px;" />
-          break;
-      case "gas_ethanole":
-    <img src="~/Images/flame.gif" alt="gas leak" style="width:50px;height:50px;" />
-          break;
       default:
-    <img src="~/Images/question.png" alt="unknown" style="width:50px;height:50px;" />
+    <img src="~/Images/question.png" alt="unknown" style="width:300px;height:300px;" />
           break;
   }
   }

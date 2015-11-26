@@ -9,9 +9,9 @@
 <div class="row">
     <img src="~/Images/piantina_DomoCasa.png" alt="Domo Casa" style="width:946px;height:479px;" usemap="#domocasa">
     <map name="domocasa">
-        <area shape="rect" coords="240,0,615,200" href="/Sensor/KitchenIndex" alt="Kitchen">
-        <area shape="rect" coords="0,0,170,290" href="/Sensor/BathroomIndex" alt="Bathroom">
-        <area shape="rect" coords="0,290,240,470" href="/Sensor/KingBedroomIndex" alt="KingBedroom">
+        <area shape="rect" coords="240,0,615,200" href='@Url.Action("RoomView", new { room = "KITCHEN"})' alt="Kitchen">
+        <area shape="rect" coords="0,0,170,290" href='@Url.Action("RoomView", new { room = "BATHROOM"})' alt="Bathroom">
+        <area shape="rect" coords="0,290,240,470" href='@Url.Action("RoomView", new { room = "DOUBLE_BEDROOM"})' alt="KingBedroom">
     </map>
 </div>
 <div class="row">
