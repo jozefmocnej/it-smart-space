@@ -21,25 +21,25 @@
     </tr>
 
     @{
-        List<DateTime> time = new List<DateTime>();
+        List<long> time = new List<long>();
         List<String> type = new List<string>();
     }
     @foreach (var item in Model)
     {
         if (type.Contains(item.Type))
         {
-            if (time[type.IndexOf(item.Type)] < Convert.ToDateTime(item.Timestamp))
-            { time[type.IndexOf(item.Type)] = Convert.ToDateTime(item.Timestamp); }
+            if (time[type.IndexOf(item.Type)] < Convert.ToInt64(item.Timestamp))
+            { time[type.IndexOf(item.Type)] = Convert.ToInt64(item.Timestamp); }
         }
         else
         {
             type.Add(item.Type);
-            time.Add(Convert.ToDateTime(item.Timestamp));
+            time.Add(Convert.ToInt64(item.Timestamp));
         }
     }
     @foreach (var item in Model)
     {
-        if (time[type.IndexOf(item.Type)] == Convert.ToDateTime(item.Timestamp))
+        if (time[type.IndexOf(item.Type)] == Convert.ToInt64(item.Timestamp))
         {
             <tr>
                 <td>

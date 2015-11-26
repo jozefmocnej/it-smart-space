@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "KitchenIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string room2 = @ViewBag.room;
 }
 @*<meta http-equiv="refresh" content="5" />*@
 <h2>Kitchen Data</h2>
@@ -12,7 +13,28 @@
 </p>
 <div class="row">
     <div class="col-md-4">
-
+@{switch (room2)
+  {
+      case "temperature":
+        <img src="~/Images/temperature.png" alt="temperature" style="width:50px;height:50px;" />
+          break;
+      case "pir":
+    <img src="~/Images/pir.jpg" alt="pir" style="width:50px;height:50px;" />
+          break;
+      case "humidity":
+    <img src="~/Images/humid.jpg" alt="humidity" style="width:50px;height:50px;" />
+          break;
+      case "light":
+    <img src="~/Images/Lightbulb.jpg" alt="light" style="width:50px;height:50px;" />
+          break;
+      case "gas_ethanole":
+    <img src="~/Images/flame.gif" alt="gas leak" style="width:50px;height:50px;" />
+          break;
+      default:
+    <img src="~/Images/question.png" alt="unknown" style="width:50px;height:50px;" />
+          break;
+  }
+  }
     </div>
     <div class="col-md-8">
         @*@Html.Partial("_SensorPartial", new List<SmartSpaceWeb.Models.Sensor>())*@
@@ -117,6 +139,6 @@
         </div>
 </div>
 <script>
-    var urlPartialVariable = '@Url.Action("_SensorPartial")';
+    var urlPartialVariable = '@Url.Action("_SensorPartial", new {room = room2})';
 </script>
 <script src="~/Scripts/sensors.js"></script>

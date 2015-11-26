@@ -33,19 +33,20 @@ namespace SmartSpaceWeb.Controllers
         }
 
 
-        public ActionResult KitchenIndex()
+        public ActionResult RoomView(string room)
         {
+            if (room == null)
+            { room = ""; }
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
             //return View(items);
+            ViewBag.room = room;
             return View();
         }
 
-        public PartialViewResult _SensorPartial() {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
-
-
-            var alarms = DocumentDBRepository<Alarm>.GetItems(d => (d.AtLocation == ""));
+        public PartialViewResult _SensorPartial(string room) {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
+            var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
             int val;
             foreach (Sensor s in items)
             {
@@ -64,17 +65,6 @@ namespace SmartSpaceWeb.Controllers
             return PartialView(items);
         }
 
-        public ActionResult BathroomIndex()
-        {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "BATHROOM"));
-            return View(items);
-        }
-
-        public ActionResult KingBedroomIndex()
-        {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "DOUBLE_BEDROOM"));
-            return View(items);
-        }
 
         public ActionResult Create()
         {
