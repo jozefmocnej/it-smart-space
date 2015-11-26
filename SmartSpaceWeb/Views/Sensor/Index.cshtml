@@ -1,76 +1,95 @@
-﻿@model IEnumerable<SmartSpaceWeb.Models.Sensor>
+﻿@model SmartSpaceWeb.Models.SensorSearch
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@*@{
+    List<SelectListItem> locations = new List<SelectListItem>();
+    locations.Add(new SelectListItem
+    {
+        Text = "Exemplo1",
+        Value = "Exemplo1"
+    });
+    locations.Add(new SelectListItem
+    {
+        Text = "Exemplo2",
+        Value = "Exemplo2",
+        Selected = true
+    });
+    locations.Add(new SelectListItem
+    {
+        Text = "Exemplo3",
+        Value = "Exemplo3"
+    });
+
+    List<SelectListItem> types = new List<SelectListItem>();
+    types.Add(new SelectListItem
+    {
+        Text = "Exemplo1",
+        Value = "Exemplo1"
+    });
+    types.Add(new SelectListItem
+    {
+        Text = "Exemplo2",
+        Value = "Exemplo2",
+        Selected = true
+    });
+    types.Add(new SelectListItem
+    {
+        Text = "Exemplo3",
+        Value = "Exemplo3"
+    });
+}*@
 
 <h2>Central Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IdDevice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AtLocation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Place)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Counter)
-        </th>
-        <th></th>
-    </tr>
-    <!--Ahoj0-->
-@foreach (var item in Model) { 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdDevice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AtLocation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Counter)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@using (Ajax.BeginForm("IndexPartial", "Sensor", new AjaxOptions { UpdateTargetId = "divPartial" }, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="row">
+        <div class="form-group col-md-5">
+            @Html.LabelFor(m => m.AtLocation, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @*@Html.TextBoxFor(m => m.AtLocation, new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.AtLocation, Model.Locations, "-- Select Status --", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-5">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @*@Html.TextBoxFor(m => m.Type, new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.Type, Model.Types, "-- Select Status --", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Search" />
+            </div>
+        </div>
+    </div>
 }
 
-</table>
-<img src="~/Images/piantina_DomoCasa.png" alt="Domo Casa" style="width:946px;height:479px;" usemap="#domocasa">
+<script>
+    function updatePartial(data) {
+        alert(data.result);
+    }
+</script>
+
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<div id="divPartial">
+    @{
+        Html.RenderAction("IndexPartial", "Sensor");
+    }
+</div>
+
+
+@*<img src="~/Images/piantina_DomoCasa.png" alt="Domo Casa" style="width:946px;height:479px;" usemap="#domocasa">
 <map name="domocasa">
     <area shape="rect" coords="240,0,615,200" href="/Sensor/KitchenIndex" alt="Kitchen">
     <area shape="rect" coords="0,0,170,290" href="/Sensor/BathroomIndex" alt="Bathroom">
     <area shape="rect" coords="0,290,240,470" href="/Sensor/KingBedroomIndex" alt="KingBedroom">
-</map>
+</map>*@

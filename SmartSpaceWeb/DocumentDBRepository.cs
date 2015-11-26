@@ -136,6 +136,11 @@ namespace SmartSpaceWeb
                 .AsEnumerable();
         }
 
+        public static IQueryable<T> GetItems()
+        {
+            return Client.CreateDocumentQuery<T>(Collection.DocumentsLink).AsQueryable();
+        }
+
         public static async Task<Document> CreateItemAsync(T item)
         {
             return await Client.CreateDocumentAsync(Collection.SelfLink, item);

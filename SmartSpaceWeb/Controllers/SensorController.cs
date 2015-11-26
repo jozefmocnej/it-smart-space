@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Threading.Tasks;
 using SmartSpaceWeb.Models;
+using System.Web.UI.WebControls;
 
 namespace SmartSpaceWeb.Controllers
 {
@@ -16,8 +17,14 @@ namespace SmartSpaceWeb.Controllers
         public ActionResult Index()
         {
             //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
-            return View(items);
+            //var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            //return View(items);
+            var model = new SensorSearch();
+            DocumentDBRepository<Sensor>.GetItems().Where(x => x.Type == "").OrderByDescending(y => y.Timestamp).AsEnumerable();
+            //ddl.DataSource = DocumentDBRepository<Sensor>.GetItems(d => (true)).GroupBy(x => x.AtLocation).Select(y => y.First()).Select(z => z.AtLocation).ToList();
+            //model.Locations = new List<SelectListItem>();
+            //= 
+            return View(new SensorSearch());
         }
 
         public static DateTime TryParseDateTime(string dateTimeString)
@@ -30,6 +37,12 @@ namespace SmartSpaceWeb.Controllers
             }
 
             return dateTime;
+        }
+
+        public PartialViewResult IndexPartial()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            return PartialView("_IndexPartial", items);
         }
 
 
