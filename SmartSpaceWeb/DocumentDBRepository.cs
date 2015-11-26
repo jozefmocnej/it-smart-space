@@ -136,6 +136,45 @@ namespace SmartSpaceWeb
                 .AsEnumerable();
         }
 
+        public static void CreateQuery(Expression<Func<T, bool>> predicate)
+        {
+
+         /*  var items = Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
+                .Where(predicate)
+                .AsEnumerable();
+
+            */
+            
+            //var orders = from o in Client.CreateDocumentQuery<Models.Sensor>(Collection.SelfLink)
+             //.Where(o => o.Timestamp.Epoch >= DateTime.UtcNow.AddDays(-7).ToEpoch()).AsEnumerable().Select<Models.Sensor>;
+
+          /*  var orderss = from o in Client.CreateDocumentQuery<Models.Sensor>(Collection.SelfLink)
+            where o.Timestamp.Epoch >= DateTime.Now.AddDays(-7).ToEpoch()
+            select o;*/
+
+         /*   foreach(){
+
+            string a = ("SELECT * FROM c WHERE c.type ='humidity'");
+            var query = Client.CreateDocumentQuery(Collection.SelfLink, a);
+            var family = query.AsEnumerable().LastOrDefault();
+            return null;
+                }
+            */
+           /*string sql = String.Format("SELECT * FROM c ",
+                 DateTime.UtcNow.AddDays(-7).ToEpoch());
+
+            IEnumerable <T> sensors = Client.CreateDocumentQuery<T>(Collection.DocumentsLink, sql).AsEnumerable<T>();
+
+
+            IEnumerable<T> sensorsa = Client.CreateDocumentQuery<T>(Collection.DocumentsLink)
+                        .Where(predicate)
+                        .AsEnumerable();
+
+            */
+           
+           
+        }
+
         public static async Task<Document> CreateItemAsync(T item)
         {
             return await Client.CreateDocumentAsync(Collection.SelfLink, item);
@@ -181,6 +220,21 @@ namespace SmartSpaceWeb
             
         //    var trigger = await Client.CreateTriggerAsync(Collection.SelfLink, trig);
         //    var test = trigger.Resource.ResourceId;
+    }
+
+
+    //testing classes, FIXME implement me better
+  
+
+    public static class Extensions
+    {
+        public static int ToEpoch(this DateTime date)
+        {
+            if (date == null) return int.MinValue;
+            DateTime epoch = new DateTime(1970, 1, 1);
+            TimeSpan epochTimeSpan = date - epoch;
+            return (int)epochTimeSpan.TotalSeconds;
+        }
     }
 
     
