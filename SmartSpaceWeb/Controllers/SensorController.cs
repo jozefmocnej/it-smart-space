@@ -7,13 +7,14 @@ using System.Web.Mvc;
 using System.Net;
 using System.Threading.Tasks;
 using SmartSpaceWeb.Models;
+using System.Globalization;
 
 namespace SmartSpaceWeb.Controllers
 {
     public class SensorController : Controller
     {
         // GET: Sensor
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
             return View(items);
@@ -118,6 +119,44 @@ namespace SmartSpaceWeb.Controllers
             Sensor item = DocumentDBRepository<Sensor>.GetItem(x => x.Id == id);
             return View(item);
         }
+
+
+        // HELPING METHODS 
+        public static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
+        }
+
+        public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return Math.Floor(diff.TotalSeconds);
+        }
+
+        private async Task<IEnumerable<Sensor>> DataConversion(IEnumerable<Sensor> items)
+        {
+            string t = "dd/MM/yyyy HH:mm:ss";
+
+            foreach (Sensor sen in items)
+            {
+
+
+                DateTime dt;
+                if (DateTime.TryParseExact(sen.Timestamp, t, CultureInfo.InvariantCulture,
+                                           DateTimeStyles.None,
+                                           out dt))
+                {
+                    sen.Timestamp = System.Convert.ToString(ConvertToUnixTimestamp(dt));
+                    await Edit(sen);
+                }
+
+            }
+            return items;
+        }
+
+
 
     }
 }
