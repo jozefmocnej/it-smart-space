@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Net;
 using System.Threading.Tasks;
 using SmartSpaceWeb.Models;
+using System.Globalization;
 using System.Web.UI.WebControls;
 
 namespace SmartSpaceWeb.Controllers
@@ -25,6 +26,13 @@ namespace SmartSpaceWeb.Controllers
             //model.Locations = new List<SelectListItem>();
             //= 
             return View(new SensorSearch());
+            //var items = DocumentDBRepository<Sensor>.GetItems(d => (true)).ToList<Sensor>();
+            //foreach(Sensor sensor in items)
+            //{   
+            //    sensor.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(sensor.Timestamp)).ToString());
+            //}
+
+            //return View(items);
         }
 
         public static DateTime TryParseDateTime(string dateTimeString)
@@ -46,19 +54,36 @@ namespace SmartSpaceWeb.Controllers
         }
 
 
-        public ActionResult KitchenIndex()
+        public ActionResult RoomView(string room)
         {
+            if (room == null)
+            { room = ""; }
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
             //return View(items);
+            ViewBag.room = room;
             return View();
         }
 
-        public PartialViewResult _SensorPartial() {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
+        public PartialViewResult _SensorPartial(string room) {
+            if ((room == null) || (room == "KITCHEN"))
+            { room = ""; }
+            
+            List<string> types = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();           
+            List<Sensor> items = new List<Sensor>();
+            foreach (string t in types) 
+            {
+                items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t) )).OrderByDescending(d => d.Timestamp).FirstOrDefault());
+                //DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t))).OrderByDescending(d => d.Timestamp).FirstOrDefault();
+              //  items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t))).Where( c => c.Timestamp == c.Timestamp.Max());
+            }
+
+            //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
+            
 
 
-            var alarms = DocumentDBRepository<Alarm>.GetItems(d => (d.AtLocation == ""));
+            var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
+
             int val;
             foreach (Sensor s in items)
             {
@@ -77,17 +102,6 @@ namespace SmartSpaceWeb.Controllers
             return PartialView(items);
         }
 
-        public ActionResult BathroomIndex()
-        {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "BATHROOM"));
-            return View(items);
-        }
-
-        public ActionResult KingBedroomIndex()
-        {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "DOUBLE_BEDROOM"));
-            return View(items);
-        }
 
         public ActionResult Create()
         {
@@ -170,6 +184,44 @@ namespace SmartSpaceWeb.Controllers
             Sensor item = DocumentDBRepository<Sensor>.GetItem(x => x.Id == id);
             return View(item);
         }
+
+
+        // HELPING METHODS 
+        public static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(timestamp);
+        }
+
+        public static double ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return Math.Floor(diff.TotalSeconds);
+        }
+
+        private async Task<IEnumerable<Sensor>> DataConversion(IEnumerable<Sensor> items)
+        {
+            string t = "dd/MM/yyyy HH:mm:ss";
+
+            foreach (Sensor sen in items)
+            {
+
+
+                DateTime dt;
+                if (DateTime.TryParseExact(sen.Timestamp, t, CultureInfo.InvariantCulture,
+                                           DateTimeStyles.None,
+                                           out dt))
+                {
+                    sen.Timestamp = System.Convert.ToString(ConvertToUnixTimestamp(dt));
+                    await Edit(sen);
+                }
+
+            }
+            return items;
+        }
+
+
 
     }
 }

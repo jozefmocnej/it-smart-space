@@ -263,5 +263,9 @@ namespace SmartSpaceWeb
             await client.DeleteDocumentAsync(doc.SelfLink);
         }
 
+    //testing classes, FIXME implement me better
+  
+
+    
     }
 }

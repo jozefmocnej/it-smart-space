@@ -192,9 +192,12 @@
     <Content Include="Images\flame.gif" />
     <Content Include="Images\humid.jpg" />
     <Content Include="Images\Lightbulb.jpg" />
+    <Content Include="Images\logo1.jpg" />
+    <Content Include="Images\ok.png" />
     <Content Include="Images\pir.jpg" />
     <Content Include="Images\question.png" />
     <Content Include="Images\temperature.png" />
+    <Content Include="Images\warning.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\SmartSpaceWeb.pubxml" />
@@ -254,9 +257,7 @@
     <Content Include="Views\Sensor\Edit.cshtml" />
     <Content Include="Views\Sensor\Delete.cshtml" />
     <Content Include="Views\Sensor\Details.cshtml" />
-    <Content Include="Views\Sensor\KitchenIndex.cshtml" />
-    <Content Include="Views\Sensor\BathroomIndex.cshtml" />
-    <Content Include="Views\Sensor\KingBedroomIndex.cshtml" />
+    <Content Include="Views\Sensor\RoomView.cshtml" />
     <Content Include="Views\Alarm\AlarmIndex.cshtml" />
     <Content Include="Views\Alarm\Create.cshtml" />
     <Content Include="Views\Alarm\Delete.cshtml" />
