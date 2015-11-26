@@ -31,8 +31,8 @@ namespace SmartSpaceWeb.Models
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
-        [JsonProperty(PropertyName = "contatore")]
-        public string Contatore { get; set; }
+        [JsonProperty(PropertyName = "Counter")]
+        public string Counter { get; set; }
 
         [NotMapped]
         [JsonProperty(PropertyName = "Flag")]
