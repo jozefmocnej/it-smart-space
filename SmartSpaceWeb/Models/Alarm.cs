@@ -4,11 +4,10 @@ using System.Linq;
 using System.Web;
 
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartSpaceWeb.Models
 {
-    public class Sensor
+    public class Alarm
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -25,18 +24,10 @@ namespace SmartSpaceWeb.Models
         [JsonProperty(PropertyName = "Place")]
         public string Place { get; set; }
 
-        [JsonProperty(PropertyName = "timestamp")]
-        public string Timestamp { get; set; }
+        [JsonProperty(PropertyName = "Min")]
+        public int Min { get; set; }
 
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
-
-        [JsonProperty(PropertyName = "Counter")]
-        public string Counter { get; set; }
-
-        [NotMapped]
-        [JsonProperty(PropertyName = "Flag")]
-        public int Flag { get; set; }
+        [JsonProperty(PropertyName = "Max")]
+        public int Max { get; set; }
     }
-
 }

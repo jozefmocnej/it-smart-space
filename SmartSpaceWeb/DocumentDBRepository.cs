@@ -208,21 +208,95 @@ namespace SmartSpaceWeb
             await client.DeleteDocumentAsync(doc.SelfLink);
         }
 
-        //public static async Task CreateTriggerAsync(string id, string body, TriggerType trigType, TriggerOperation trigOperation)
-        //{
-        //    Trigger trig = new Trigger()
-        //    {
-        //        Id = id,
-        //        Body = body,
-        //        TriggerType = trigType,
-        //        TriggerOperation = trigOperation
-        //    };
+        
+
+        
+        public static IEnumerable<T> GetItemsCol2(Expression<Func<T, bool>> predicate)
+        {
+            return Client.CreateDocumentQuery<T>(Collection2.DocumentsLink)
+                .Where(predicate)
+                .AsEnumerable();
+        }
+
+        private static DocumentCollection collection2;
+        private static DocumentCollection Collection2
+        {
+            get
+            {
+                if (collection2 == null)
+                {
+                    collection2 = ReadOrCreateCollection2(Database.SelfLink);
+                }
+
+                return collection2;
+            }
+        }
+
+        private static DocumentCollection ReadOrCreateCollection2(string databaseLink)
+        {
+            var col = Client.CreateDocumentCollectionQuery(databaseLink)
+                              .Where(c => c.Id == CollectionId2)
+                              .AsEnumerable()
+                              .FirstOrDefault();
+
+            if (col == null)
+            {
+                var collectionSpec = new DocumentCollection { Id = CollectionId2 };
+                var requestOptions = new RequestOptions { OfferType = "S1" };
+
+                col = Client.CreateDocumentCollectionAsync(databaseLink, collectionSpec, requestOptions).Result;
+            }
+
+            return col;
+        }
+
+        private static string collectionId2;
+        private static String CollectionId2
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(collectionId2))
+                {
+                    collectionId2 = ConfigurationManager.AppSettings["collection2"];
+                }
+
+                return collectionId2;
+            }
+        }
+
+        public static async Task<Document> CreateItemAsync2(T item)
+        {
+            return await Client.CreateDocumentAsync(Collection2.SelfLink, item);
+        }
+
+        public static T GetItem2(Expression<Func<T, bool>> predicate)
+        {
+            return Client.CreateDocumentQuery<T>(Collection2.DocumentsLink)
+                        .Where(predicate)
+                        .AsEnumerable()
+                        .FirstOrDefault();
+        }
+
+        public static async Task<Document> UpdateItemAsync2(string id, T item)
+        {
+            Document doc = GetDocument2(id);
+            return await Client.ReplaceDocumentAsync(doc.SelfLink, item);
+        }
             
-        //    var trigger = await Client.CreateTriggerAsync(Collection.SelfLink, trig);
-        //    var test = trigger.Resource.ResourceId;
+        private static Document GetDocument2(string id)
+        {
+            return Client.CreateDocumentQuery(Collection2.DocumentsLink)
+                .Where(d => d.Id == id)
+                .AsEnumerable()
+                .FirstOrDefault();
     }
 
-
+        public static async Task DeleteItemAsync2(string id)
+        {
+            Document doc = GetDocument2(id);
+            await client.DeleteDocumentAsync(doc.SelfLink);
+        }
+    
     //testing classes, FIXME implement me better
   
 
@@ -238,4 +312,5 @@ namespace SmartSpaceWeb
     }
 
     
+}
 }

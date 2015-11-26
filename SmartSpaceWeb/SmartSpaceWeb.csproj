@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,14 +164,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
+    <Compile Include="DatabasePolling.cs" />
     <Compile Include="DocumentDBRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Alarm.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Sensor.cs" />
@@ -205,6 +209,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sensors.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\piantina_DomoCasa.png" />
     <Content Include="Web.config" />
@@ -247,9 +252,13 @@
     <Content Include="Views\Sensor\Edit.cshtml" />
     <Content Include="Views\Sensor\Delete.cshtml" />
     <Content Include="Views\Sensor\Details.cshtml" />
-    <Content Include="Views\Sensor\KitchenIndex.cshtml" />
-    <Content Include="Views\Sensor\BathroomIndex.cshtml" />
-    <Content Include="Views\Sensor\KingBedroomIndex.cshtml" />
+    <Content Include="Views\Sensor\RoomView.cshtml" />
+    <Content Include="Views\Alarm\AlarmIndex.cshtml" />
+    <Content Include="Views\Alarm\Create.cshtml" />
+    <Content Include="Views\Alarm\Delete.cshtml" />
+    <Content Include="Views\Alarm\Edit.cshtml" />
+    <Content Include="Views\Alarm\Details.cshtml" />
+    <Content Include="Views\Sensor\_SensorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
