@@ -1,10 +1,10 @@
-﻿@model IEnumerable<SmartSpaceWeb.Models.Sensor>
+﻿@*@model IEnumerable<SmartSpaceWeb.Models.Sensor>*@
 
 @{
     ViewBag.Title = "KitchenIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<meta http-equiv="refresh" content="5" />
+@*<meta http-equiv="refresh" content="5" />*@
 <h2>Kitchen Data</h2>
 
 <p>
@@ -15,7 +15,9 @@
 
     </div>
     <div class="col-md-8">
-<table class="table">
+        @*@Html.Partial("_SensorPartial", new List<SmartSpaceWeb.Models.Sensor>())*@
+        <div id="divPartial"></div>
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Type)
@@ -111,6 +113,10 @@
 }
 }
 
-</table>
+</table>*@
         </div>
 </div>
+<script>
+    var urlPartialVariable = '@Url.Action("_SensorPartial")';
+</script>
+<script src="~/Scripts/sensors.js"></script>
