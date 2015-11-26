@@ -69,13 +69,20 @@ namespace SmartSpaceWeb.Controllers
             if ((room == null) || (room == "KITCHEN"))
             { room = ""; }
             
-            List<string> types = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();           
+            //List<string> types = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
+            //List<string> types = DocumentDBRepository<Sensor>.GetItems().Where(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
+            List<string> types = new List<string>();
+            types.Add("temperature");
+            types.Add("gas_voc");
+            types.Add("gas_ethanole");
+            types.Add("pir");
+            types.Add("humidity");
+            types.Add("light");
             List<Sensor> items = new List<Sensor>();
             foreach (string t in types) 
             {
-                items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t) )).OrderByDescending(d => d.Timestamp).FirstOrDefault());
-                //DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t))).OrderByDescending(d => d.Timestamp).FirstOrDefault();
-              //  items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t))).Where( c => c.Timestamp == c.Timestamp.Max());
+                //items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t) )).OrderByDescending(d => d.Timestamp).FirstOrDefault());
+                items.Add(DocumentDBRepository<Sensor>.GetItems().Where(d => ((d.AtLocation == room) && (d.Type == t))).OrderByDescending(d => d.Timestamp).AsEnumerable().FirstOrDefault());
             }
 
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
