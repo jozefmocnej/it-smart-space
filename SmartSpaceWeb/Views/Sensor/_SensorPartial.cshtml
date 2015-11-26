@@ -24,7 +24,7 @@
             Alarm
         </th>
     </tr>
-
+    @*
     @{
         List<long> time = new List<long>();
         List<String> type = new List<string>();
@@ -41,10 +41,10 @@
             type.Add(item.Type);
             time.Add(Convert.ToInt64(item.Timestamp));
         }
-    }
+    }*@
     @foreach (var item in Model)
     {
-        if (time[type.IndexOf(item.Type)] == Convert.ToInt64(item.Timestamp))
+        //if (time[type.IndexOf(item.Type)] == Convert.ToInt64(item.Timestamp))
         {
             <tr>
                 <td>
