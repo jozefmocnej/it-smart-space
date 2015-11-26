@@ -16,7 +16,7 @@ namespace SmartSpaceWeb.Controllers
         public ActionResult Index()
         {
             //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
-            var items = DocumentDBRepository<Sensor>.GetItems(d => d.Timestamp >= DateTime.Now.AddMinutes(-1).ToString()).ToList();
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
             return View(items);
         }
 
@@ -35,12 +35,20 @@ namespace SmartSpaceWeb.Controllers
 
         public ActionResult KitchenIndex()
         {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.Place == "kitchen"));
-            /*DateTime newest = new DateTime();
-            foreach (Sensor s in items)
-            {
-                items.
-            }*/
+            //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
+            return View(items);
+        }
+
+        public ActionResult BathroomIndex()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "BATHROOM"));
+            return View(items);
+        }
+
+        public ActionResult KingBedroomIndex()
+        {
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "DOUBLE_BEDROOM"));
             return View(items);
         }
 

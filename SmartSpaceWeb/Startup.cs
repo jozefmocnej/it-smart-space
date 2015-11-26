@@ -14,7 +14,7 @@ namespace SmartSpaceWeb
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            DatabasePolling.RegisterPolling();
+            //DatabasePolling.RegisterPolling();
 
         }
 
