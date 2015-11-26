@@ -36,8 +36,14 @@ namespace SmartSpaceWeb.Controllers
         public ActionResult KitchenIndex()
         {
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
+            //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
+            //return View(items);
+            return View();
+        }
+
+        public PartialViewResult _SensorPartial() {
             var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
-            return View(items);
+            return PartialView(items);
         }
 
         public ActionResult BathroomIndex()
