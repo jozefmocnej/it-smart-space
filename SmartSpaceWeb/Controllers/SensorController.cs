@@ -14,7 +14,7 @@ namespace SmartSpaceWeb.Controllers
     public class SensorController : Controller
     {
         // GET: Sensor
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
             var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
