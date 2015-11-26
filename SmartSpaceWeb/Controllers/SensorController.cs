@@ -23,6 +23,21 @@ namespace SmartSpaceWeb.Controllers
         {
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == "KITCHEN"));
             var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == ""));
+            var alarms = DocumentDBRepository<Alarm>.GetItems(d => (d.AtLocation == ""));
+            int val;
+            foreach (Sensor s in items)
+            {
+                val = Int32.Parse(s.Status, System.Globalization.NumberStyles.HexNumber);
+                s.Flag = 0;
+                foreach (Alarm a in alarms)
+                {
+                    if ((s.IdDevice == a.IdDevice) && (s.Place == a.Place) && (s.Type == a.Type))
+                    {
+                        if (val < a.Min) { s.Flag = -1; }
+                        else if (val > a.Max) { s.Flag = 1; }
+                    }
+                }
+            }
             return View(items);
         }
 
@@ -45,7 +60,7 @@ namespace SmartSpaceWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
+        public async Task<ActionResult> Create([Bind(Include = "Id,IdDevice,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +89,7 @@ namespace SmartSpaceWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,IdDevice,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
         {
             if (ModelState.IsValid)
             {
