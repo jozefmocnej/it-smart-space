@@ -169,19 +169,5 @@ namespace SmartSpaceWeb
             await client.DeleteDocumentAsync(doc.SelfLink);
         }
 
-        //public static async Task CreateTriggerAsync(string id, string body, TriggerType trigType, TriggerOperation trigOperation)
-        //{
-        //    Trigger trig = new Trigger()
-        //    {
-        //        Id = id,
-        //        Body = body,
-        //        TriggerType = trigType,
-        //        TriggerOperation = trigOperation
-        //    };
-            
-        //    var trigger = await Client.CreateTriggerAsync(Collection.SelfLink, trig);
-        //    var test = trigger.Resource.ResourceId;
-        }
-
     }
 }

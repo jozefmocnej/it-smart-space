@@ -15,9 +15,23 @@ namespace SmartSpaceWeb.Controllers
         // GET: Sensor
         public ActionResult Index()
         {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
+            var items = DocumentDBRepository<Sensor>.GetItems(d => d.Timestamp >= DateTime.Now.AddMinutes(-1).ToString()).ToList();
             return View(items);
         }
+
+        public static DateTime TryParseDateTime(string dateTimeString)
+        {
+            DateTime dateTime;
+            
+            if (!DateTime.TryParse(dateTimeString, out dateTime))
+            {
+                return DateTime.Now;
+            }
+
+            return dateTime;
+        }
+
 
         public ActionResult KitchenIndex()
         {
@@ -37,7 +51,7 @@ namespace SmartSpaceWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Counter")] Sensor item)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +80,7 @@ namespace SmartSpaceWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Contatore")] Sensor item)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Type,AtLocation,Place,Timestamp,Status,Counter")] Sensor item)
         {
             if (ModelState.IsValid)
             {
