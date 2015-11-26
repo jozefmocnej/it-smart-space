@@ -17,7 +17,12 @@ namespace SmartSpaceWeb.Controllers
         public ActionResult Index()
         {
             //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (true)).ToList<Sensor>();
+            foreach(Sensor sensor in items)
+            {   
+                sensor.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(sensor.Timestamp)).ToString());
+            }
+
             return View(items);
         }
 
