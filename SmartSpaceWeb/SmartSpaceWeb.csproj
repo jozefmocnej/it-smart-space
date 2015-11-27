@@ -192,13 +192,16 @@
     <Content Include="Images\bathroom.jpg" />
     <Content Include="Images\doublebedroom.jpg" />
     <Content Include="Images\flame.gif" />
+    <Content Include="Images\gas2.jpg" />
     <Content Include="Images\humid.jpg" />
     <Content Include="Images\kitchen.jpg" />
     <Content Include="Images\Lightbulb.jpg" />
     <Content Include="Images\logo1.jpg" />
     <Content Include="Images\ok.png" />
+    <Content Include="Images\Piantina3d.png" />
     <Content Include="Images\pir.jpg" />
     <Content Include="Images\question.png" />
+    <Content Include="Images\questionroom.png" />
     <Content Include="Images\temperature.png" />
     <Content Include="Images\warning.gif" />
     <Content Include="Scripts\bootstrap.js" />
