@@ -204,6 +204,7 @@
     <Content Include="Images\questionroom.png" />
     <Content Include="Images\temperature.png" />
     <Content Include="Images\warning.gif" />
+    <Content Include="Images\warning2.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\SmartSpaceWeb.pubxml" />
