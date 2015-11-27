@@ -81,7 +81,7 @@ namespace SmartSpaceWeb.Controllers
         public PartialViewResult _SensorPartial(string room) {
             if ((room == null) || (room == "KITCHEN"))
             { room = ""; }
-            
+            /*
             //List<string> types = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
             //List<string> types = DocumentDBRepository<Sensor>.GetItems().Where(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
             List<string> types = new List<string>();
@@ -96,7 +96,9 @@ namespace SmartSpaceWeb.Controllers
             {
                 //items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t) )).OrderByDescending(d => d.Timestamp).FirstOrDefault());
                 items.Add(DocumentDBRepository<Sensor>.GetItems().Where(d => ((d.AtLocation == room) && (d.Type == t))).OrderByDescending(d => d.Timestamp).AsEnumerable().FirstOrDefault());
-            }
+            }*/
+
+            var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room) ).GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault());
 
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
             
