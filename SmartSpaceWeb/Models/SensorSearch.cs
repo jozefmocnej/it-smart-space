@@ -30,6 +30,12 @@ namespace SmartSpaceWeb.Models
 
         //[JsonProperty(PropertyName = "Flag")]
         //public int Flag { get; set; }
+
+        public SensorSearch()
+        {
+            Locations = new List<SelectListItem>();
+            Types = new List<SelectListItem>();
+        }
     }
 
 }
