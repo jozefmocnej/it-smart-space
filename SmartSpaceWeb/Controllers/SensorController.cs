@@ -48,21 +48,31 @@ namespace SmartSpaceWeb.Controllers
             //return View(items);
         }
 
-        public static DateTime TryParseDateTime(string dateTimeString)
+        //public static DateTime TryParseDateTime(string dateTimeString)
+        //{
+        //    DateTime dateTime;
+
+        //    if (!DateTime.TryParse(dateTimeString, out dateTime))
+        //    {
+        //        return DateTime.Now;
+        //    }
+
+        //    return dateTime;
+        //}
+
+        public PartialViewResult IndexPartial(SensorSearch model)
         {
-            DateTime dateTime;
-            
-            if (!DateTime.TryParse(dateTimeString, out dateTime))
+            var items = DocumentDBRepository<Sensor>.GetItems();
+            var location = model?.AtLocation;
+            if (location != null)
             {
-                return DateTime.Now;
+                items = items.Where(x => x.AtLocation == location);
             }
-
-            return dateTime;
-        }
-
-        public PartialViewResult IndexPartial()
-        {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+            var type = model?.Type;
+            if (type != null)
+            {
+                items = items.Where(y => y.Type == type);
+            }
             return PartialView("_IndexPartial", items);
         }
 
@@ -78,10 +88,11 @@ namespace SmartSpaceWeb.Controllers
             return View();
         }
 
-        public PartialViewResult _SensorPartial(string room) {
+        public PartialViewResult _SensorPartial(string room)
+        {
             if ((room == null) || (room == "KITCHEN"))
             { room = ""; }
-            
+
             //List<string> types = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
             //List<string> types = DocumentDBRepository<Sensor>.GetItems().Where(d => (d.AtLocation == room)).Select(d => d.Type).Distinct().ToList();
             List<string> types = new List<string>();
@@ -92,14 +103,14 @@ namespace SmartSpaceWeb.Controllers
             types.Add("humidity");
             types.Add("light");
             List<Sensor> items = new List<Sensor>();
-            foreach (string t in types) 
+            foreach (string t in types)
             {
                 //items.Add(DocumentDBRepository<Sensor>.GetItems(d => ((d.AtLocation == room) && (d.Type == t) )).OrderByDescending(d => d.Timestamp).FirstOrDefault());
                 items.Add(DocumentDBRepository<Sensor>.GetItems().Where(d => ((d.AtLocation == room) && (d.Type == t))).OrderByDescending(d => d.Timestamp).AsEnumerable().FirstOrDefault());
             }
 
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
-            
+
 
 
             var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
@@ -118,7 +129,7 @@ namespace SmartSpaceWeb.Controllers
                     }
                 }
             }
-            
+
             return PartialView(items);
         }
 
