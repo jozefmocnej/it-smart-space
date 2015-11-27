@@ -48,21 +48,31 @@ namespace SmartSpaceWeb.Controllers
             //return View(items);
         }
 
-        public static DateTime TryParseDateTime(string dateTimeString)
+        //public static DateTime TryParseDateTime(string dateTimeString)
+        //{
+        //    DateTime dateTime;
+
+        //    if (!DateTime.TryParse(dateTimeString, out dateTime))
+        //    {
+        //        return DateTime.Now;
+        //    }
+
+        //    return dateTime;
+        //}
+
+        public PartialViewResult IndexPartial(SensorSearch model)
         {
-            DateTime dateTime;
-            
-            if (!DateTime.TryParse(dateTimeString, out dateTime))
+            var items = DocumentDBRepository<Sensor>.GetItems();
+            var location = model?.AtLocation;
+            if (location != null)
             {
-                return DateTime.Now;
-            }
-
-            return dateTime;
+                items = items.Where(x => x.AtLocation == location);
         }
-
-        public PartialViewResult IndexPartial()
+            var type = model?.Type;
+            if (type != null)
         {
-            var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
+                items = items.Where(y => y.Type == type);
+            }
             return PartialView("_IndexPartial", items);
         }
 
@@ -78,7 +88,8 @@ namespace SmartSpaceWeb.Controllers
             return View();
         }
 
-        public PartialViewResult _SensorPartial(string room) {
+        public PartialViewResult _SensorPartial(string room)
+        {
             if ((room == null) || (room == "KITCHEN"))
             { room = ""; }
             /*
