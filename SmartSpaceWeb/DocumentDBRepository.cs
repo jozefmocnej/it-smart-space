@@ -263,8 +263,10 @@ namespace SmartSpaceWeb
             await client.DeleteDocumentAsync(doc.SelfLink);
         }
 
-    //testing classes, FIXME implement me better
-  
+        //public static async Task ExecuteQuery(string query)
+        //{
+        //    return Client.
+        //}  
 
     
     }

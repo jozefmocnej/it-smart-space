@@ -1,42 +1,5 @@
 ﻿@model SmartSpaceWeb.Models.SensorSearch
 
-@*@{
-    List<SelectListItem> locations = new List<SelectListItem>();
-    locations.Add(new SelectListItem
-    {
-        Text = "Exemplo1",
-        Value = "Exemplo1"
-    });
-    locations.Add(new SelectListItem
-    {
-        Text = "Exemplo2",
-        Value = "Exemplo2",
-        Selected = true
-    });
-    locations.Add(new SelectListItem
-    {
-        Text = "Exemplo3",
-        Value = "Exemplo3"
-    });
-
-    List<SelectListItem> types = new List<SelectListItem>();
-    types.Add(new SelectListItem
-    {
-        Text = "Exemplo1",
-        Value = "Exemplo1"
-    });
-    types.Add(new SelectListItem
-    {
-        Text = "Exemplo2",
-        Value = "Exemplo2",
-        Selected = true
-    });
-    types.Add(new SelectListItem
-    {
-        Text = "Exemplo3",
-        Value = "Exemplo3"
-    });
-}*@
 
 <h2>Central Index</h2>
 
@@ -47,17 +10,17 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="row">
         <div class="form-group col-md-5">
-            @Html.LabelFor(m => m.AtLocation, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(model => model.AtLocation, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @*@Html.TextBoxFor(m => m.AtLocation, new { @class = "form-control" })*@
-                @Html.DropDownListFor(model => model.AtLocation, Model.Locations, "-- Select Status --", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.AtLocation, Model.Locations, "-- No selection --", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group col-md-5">
-            @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(model => model.Type, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @*@Html.TextBoxFor(m => m.Type, new { @class = "form-control" })*@
-                @Html.DropDownListFor(model => model.Type, Model.Types, "-- Select Status --", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Type, Model.Types, "-- No selection --", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group col-md-2">

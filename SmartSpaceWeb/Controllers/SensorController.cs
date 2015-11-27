@@ -111,7 +111,7 @@ namespace SmartSpaceWeb.Controllers
 
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (d.AtLocation == room));
 
-
+            //var test = DocumentDBRepository<Sensor>.GetItems().Where(x => x.Timestamp >= (x.Timestamp.Select()))
 
             var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
 
