@@ -49,6 +49,8 @@ namespace SmartSpaceWeb.Controllers
             var itemList = items.ToList();
             foreach (Sensor sensor in itemList)
             {
+                //simple fix because of datatime inconsistency
+                if(sensor.Timestamp.Length<15)
                 sensor.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(sensor.Timestamp)).ToString());
             }
             return PartialView("_IndexPartial", itemList);
