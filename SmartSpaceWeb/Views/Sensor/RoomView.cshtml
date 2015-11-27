@@ -6,26 +6,26 @@
     string room2 = @ViewBag.room;
 }
 @*<meta http-equiv="refresh" content="5" />*@
-<h2>Kitchen Data</h2>
+<h2>@ViewBag.room Data</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <br/>
 </p>
 <div class="row">
     <div class="col-md-4">
 @{switch (room2)
   {
       case "KITCHEN":
-        <img src="~/Images/temperature.png" alt="temperature" style="width:300px;height:300px;" />
+        <img src="~/Images/kitchen.jpg" alt="kitchen" style="width:380px;" />
           break;
       case "BATHROOM":
-    <img src="~/Images/pir.jpg" alt="pir" style="width:300px;height:300px;" />
+    <img src="~/Images/bathroom.jpg" alt="batchroom" style="width:380px;" />
           break;
       case "DOUBLEBEDROOM":
-    <img src="~/Images/humid.jpg" alt="humidity" style="width:300px;height:300px;" />
+    <img src="~/Images/doublebedroom.jpg" alt="doublebedroom" style="width:380px;" />
           break;
       default:
-    <img src="~/Images/question.png" alt="unknown" style="width:300px;height:300px;" />
+    <img src="~/Images/question.png" alt="unknown" style="width:380px;" />
           break;
   }
   }
