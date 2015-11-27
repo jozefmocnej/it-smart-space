@@ -36,6 +36,12 @@ namespace SmartSpaceWeb.Models
             Locations = new List<SelectListItem>();
             Types = new List<SelectListItem>();
         }
+     
+    }
+    public class SensorListBox
+    {
+        public string Name { get; set; }
+        public int ID { get; set; }
     }
 
 }

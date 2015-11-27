@@ -15,7 +15,7 @@ namespace SmartSpaceWeb.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About work";
 
 
             return View();
@@ -23,7 +23,7 @@ namespace SmartSpaceWeb.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Our contacts";
 
             return View();
         }

@@ -21,8 +21,17 @@ namespace SmartSpaceWeb.Controllers
 
         public ActionResult Create()
         {
-            return View("AlarmCreate");
+            var model = new SensorSearch();
+            var locations = DocumentDBRepository<Sensor>.GetItems().Select(t => t.AtLocation).AsEnumerable().Distinct();
+            var types = DocumentDBRepository<Sensor>.GetItems().Select(t => t.Type).AsEnumerable().Distinct();
+
+            ViewBag.SensorDataLocation = new SelectList(locations);
+            ViewBag.SensorDataType = new SelectList(types);
+
+            return View("Create");
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

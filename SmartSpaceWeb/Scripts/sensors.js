@@ -1,11 +1,12 @@
 ﻿$(document).ready(function () {
 
+    loadPartialView();
     //initialize the loop
     RefreshPartial();
 });
 
 function RefreshPartial() {
-    //this will wait 5 seconds and then fire the load partial function
+    //this will wait 10 seconds and then fire the load partial function
     setTimeout(function () {
         loadPartialView();
         //recall this function so that it will continue to loop
