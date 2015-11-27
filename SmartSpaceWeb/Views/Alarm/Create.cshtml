@@ -15,26 +15,24 @@
         <h4>Alarm</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdDevice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdDevice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdDevice, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+  
         <div class="form-group">
             @Html.LabelFor(model => model.AtLocation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AtLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.AtLocation, (SelectList)ViewBag.SensorDataLocation, "-- Select At Location --", new { @class = "form-control", @id = "SelectLocation", onchange = "CallFunctionEvent()" })
+                <script>
+                    function CallFunctionEvent() {
+                        var answer = document.getElementById("SelectLocation");
+                        if (answer[answer.selectedIndex].value == 'BATHROOM')
+                            $('#Iddevice').val('0080E102001AB9CA');
+                        if (answer[answer.selectedIndex].value == "")
+                            $('#Iddevice').val('0080E102001AC125');
+                        if (answer[answer.selectedIndex].value == 'DOUBLE_BEDROOM')
+                            $('#Iddevice').val('0080E102001AC47C');
+                    }
+
+                </script>
+
                 @Html.ValidationMessageFor(model => model.AtLocation, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,6 +42,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Type, (SelectList)ViewBag.SensorDataType, "-- Select Type --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -64,6 +70,15 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.IdDevice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdDevice, new { htmlAttributes = new { @id = "Iddevice", @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.IdDevice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -72,5 +87,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "AlarmIndex")
 </div>
