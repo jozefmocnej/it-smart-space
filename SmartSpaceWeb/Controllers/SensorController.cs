@@ -21,11 +21,24 @@ namespace SmartSpaceWeb.Controllers
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
             //return View(items);
             var model = new SensorSearch();
-            DocumentDBRepository<Sensor>.GetItems().Where(x => x.Type == "").OrderByDescending(y => y.Timestamp).AsEnumerable();
-            //ddl.DataSource = DocumentDBRepository<Sensor>.GetItems(d => (true)).GroupBy(x => x.AtLocation).Select(y => y.First()).Select(z => z.AtLocation).ToList();
+            //var locations = DocumentDBRepository<Sensor>.GetItems().GroupBy(r => r.AtLocation).Select(t => t.First()).AsEnumerable();
+            var locations = DocumentDBRepository<Sensor>.GetItems().Select(t => t.AtLocation).AsEnumerable().Distinct();
+            var types = DocumentDBRepository<Sensor>.GetItems().Select(t => t.Type).AsEnumerable().Distinct();
+            //var types = DocumentDBRepository<Sensor>.GetItems().Select(t => t.Type).Distinct().AsEnumerable();
+            //(x => x.AtLocation).Select(y => y.First()).Select(z => z.AtLocation).AsEnumerable();
+            //var types = DocumentDBRepository<Sensor>.GetItems().GroupBy(x => x.Type).Select(y => y.First()).Select(z => z.Type).AsEnumerable();
+            foreach (var location in locations)
+            {
+                model.Locations.Add(new SelectListItem { Text = location, Value = location });
+            }
+
+            foreach (var type in types)
+            {
+                model.Types.Add(new SelectListItem { Text = type, Value = type });
+            }
             //model.Locations = new List<SelectListItem>();
             //= 
-            return View(new SensorSearch());
+            return View(model);
             //var items = DocumentDBRepository<Sensor>.GetItems(d => (true)).ToList<Sensor>();
             //foreach(Sensor sensor in items)
             //{   
