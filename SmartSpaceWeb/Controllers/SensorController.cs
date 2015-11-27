@@ -17,16 +17,9 @@ namespace SmartSpaceWeb.Controllers
         // GET: Sensor
         public ActionResult Index()
         {
-            //.OrderByDescending(x => (DateTime.Parse(x.Timestamp)))
-            //var items = DocumentDBRepository<Sensor>.GetItems(d => (true));
-            //return View(items);
             var model = new SensorSearch();
-            //var locations = DocumentDBRepository<Sensor>.GetItems().GroupBy(r => r.AtLocation).Select(t => t.First()).AsEnumerable();
             var locations = DocumentDBRepository<Sensor>.GetItems().Select(t => t.AtLocation).AsEnumerable().Distinct();
             var types = DocumentDBRepository<Sensor>.GetItems().Select(t => t.Type).AsEnumerable().Distinct();
-            //var types = DocumentDBRepository<Sensor>.GetItems().Select(t => t.Type).Distinct().AsEnumerable();
-            //(x => x.AtLocation).Select(y => y.First()).Select(z => z.AtLocation).AsEnumerable();
-            //var types = DocumentDBRepository<Sensor>.GetItems().GroupBy(x => x.Type).Select(y => y.First()).Select(z => z.Type).AsEnumerable();
             foreach (var location in locations)
             {
                 model.Locations.Add(new SelectListItem { Text = location, Value = location });
@@ -36,29 +29,8 @@ namespace SmartSpaceWeb.Controllers
             {
                 model.Types.Add(new SelectListItem { Text = type, Value = type });
             }
-            //model.Locations = new List<SelectListItem>();
-            //= 
             return View(model);
-            //var items = DocumentDBRepository<Sensor>.GetItems(d => (true)).ToList<Sensor>();
-            //foreach(Sensor sensor in items)
-            //{   
-            //    sensor.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(sensor.Timestamp)).ToString());
-            //}
-
-            //return View(items);
         }
-
-        //public static DateTime TryParseDateTime(string dateTimeString)
-        //{
-        //    DateTime dateTime;
-
-        //    if (!DateTime.TryParse(dateTimeString, out dateTime))
-        //    {
-        //        return DateTime.Now;
-        //    }
-
-        //    return dateTime;
-        //}
 
         public PartialViewResult IndexPartial(SensorSearch model)
         {
@@ -74,7 +46,12 @@ namespace SmartSpaceWeb.Controllers
                     items = items.Where(y => y.Type == model.Type);
             }
             }
-            return PartialView("_IndexPartial", items);
+            var itemList = items.ToList();
+            foreach (Sensor sensor in itemList)
+            {
+                sensor.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(sensor.Timestamp)).ToString());
+            }
+            return PartialView("_IndexPartial", itemList);
         }
 
 
@@ -92,7 +69,7 @@ namespace SmartSpaceWeb.Controllers
             { room = ""; }
 
             //var items = DocumentDBRepository<Sensor>.GetItems(d => d.AtLocation == room).GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault());
-            var items = DocumentDBRepository<Sensor>.GetItems().Where(d => (d.AtLocation == room )).AsEnumerable().GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault()).ToList();
+            var items = DocumentDBRepository<Sensor>.GetItems(d => d.AtLocation == room).AsEnumerable().GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault());
 
             var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
 
