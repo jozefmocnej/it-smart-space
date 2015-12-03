@@ -85,6 +85,11 @@
                 <td>
                     <br />
                     @Html.DisplayFor(modelItem => item.Timestamp)
+                    @{ if (@ViewBag.time <= Convert.ToDateTime(item.Timestamp))
+                     { <img src="~/Images/active.png" alt="active" /> }
+                       else
+                       {  <img src="~/Images/inactive.png" alt="inactive" /> }
+}
                 </td>
                 <td>
                     <br />
@@ -103,11 +108,14 @@
                         case -1:
                         <img src="~/Images/warning2.png" alt="too low" style="width:50px;height:50px;" />
                             break;                        
-                        default:
+                        case 0:
                         <img src="~/Images/ok.png" alt="ok" style="width:50px;height:50px;" />
                             break;
-                            }
-                            }
+                        default:
+                        <img src="~/Images/question.png" alt="ok" style="width:50px;height:50px;" />
+                            break;
+                    }
+}
                 </td>
             </tr>
                             }

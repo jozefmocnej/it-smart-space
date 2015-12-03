@@ -70,8 +70,10 @@ namespace SmartSpaceWeb.Controllers
             if ((room == null) || (room == "KITCHEN"))
             { room = ""; }
 
+            DateTime time = DateTime.Now.AddHours(-1);
+
             //var items = DocumentDBRepository<Sensor>.GetItems(d => d.AtLocation == room).GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault());
-            var items = DocumentDBRepository<Sensor>.GetItems(d => d.AtLocation == room).AsEnumerable().GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault());
+            var items = DocumentDBRepository<Sensor>.GetItems(d => d.AtLocation == room).AsEnumerable().GroupBy(r => r.Type).Select(g => g.OrderByDescending(x => x.Timestamp).FirstOrDefault()).ToList();
 
             var alarms = DocumentDBRepository<Alarm>.GetItemsCol2(d => (d.AtLocation == room));
 
@@ -88,8 +90,13 @@ namespace SmartSpaceWeb.Controllers
                         else if (val > a.Max) { s.Flag = 1; }
                     }
                 }
+                if (s.Timestamp.Length < 15)
+                {
+                    s.Timestamp = (ConvertFromUnixTimestamp(System.Convert.ToDouble(s.Timestamp)).ToString());
+                }
             }
 
+            ViewBag.time = time;
             return PartialView(items);
         }
 

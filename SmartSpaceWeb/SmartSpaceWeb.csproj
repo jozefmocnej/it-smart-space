@@ -189,11 +189,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\active.png" />
     <Content Include="Images\bathroom.jpg" />
     <Content Include="Images\doublebedroom.jpg" />
     <Content Include="Images\flame.gif" />
     <Content Include="Images\gas2.jpg" />
     <Content Include="Images\humid.jpg" />
+    <Content Include="Images\inactive.png" />
     <Content Include="Images\kitchen.jpg" />
     <Content Include="Images\Lightbulb.jpg" />
     <Content Include="Images\logo1.jpg" />
